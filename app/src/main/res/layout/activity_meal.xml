@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.MealActivity">
+    tools:context=".ui.mealView.MealActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -43,6 +43,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="20dp"
                 android:textSize="40sp"
+
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/mealImg_card"
                 app:layout_constraintTop_toBottomOf="@id/mealImg_card"
@@ -74,9 +75,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/instructions"
+                android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="@id/mealStr"
                 app:layout_constraintTop_toBottomOf="@id/mealArea" />
 
@@ -85,10 +86,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@id/mealStr"
                 app:layout_constraintTop_toBottomOf="@id/titleInstructions"
-                tools:text="dfjkassjkasdjkasdjkasdjkasdjk" />
+                tools:text="Mix all the ingredients in a bowl...\nAdd mayonnaise .\nand/or Sambal before cutting the sandwich (optional)." />
 
             <TextView
                 android:id="@+id/titleIngredients"
@@ -96,21 +97,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/ingredients"
-                android:textSize="24sp"
                 android:textColor="@color/black"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/mealStr"
                 app:layout_constraintTop_toBottomOf="@id/mealInstructions" />
 
-            <TextView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/mealIngredients"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="@id/mealStr"
-                app:layout_constraintTop_toBottomOf="@id/titleIngredients"
-                tools:text="meal Area" />
+                app:layout_constraintStart_toStartOf="@id/titleIngredients"
+                app:layout_constraintTop_toBottomOf="@id/titleIngredients" />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
