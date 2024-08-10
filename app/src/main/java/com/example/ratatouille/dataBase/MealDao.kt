@@ -6,14 +6,16 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import com.example.ratatouille.data.Meal
 import androidx.room.Query
+import com.example.ratatouille.data.MealDB
+
 @Dao
 interface MealDao {
     @Query("SELECT * FROM favorite_table")
-    suspend fun getAllMeals(): List<Meal>
+    suspend fun getAllMeals(): List<MealDB>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMeal(meal: Meal)
+    suspend fun insertMeal(meal: MealDB)
 
     @Delete
-    suspend fun deleteMeal(meal: Meal)
+    suspend fun deleteMeal(meal: MealDB)
 }
