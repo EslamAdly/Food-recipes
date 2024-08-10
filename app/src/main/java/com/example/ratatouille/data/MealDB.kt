@@ -12,5 +12,5 @@ data class MealDB(
     val strArea: String,
     val strCategory: String,
     val strYoutube: String,
-    val ingredients: List<Ingredient>,
+//    val ingredients: List<Ingredient>,
 )
