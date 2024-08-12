@@ -1,30 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.mealView.MealActivity">
+    tools:context=".mealView.MealActivity">
 
-    <ScrollView
+    <!-- AppBarLayout to handle Toolbar and scroll behavior -->
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/main_horizontalMargin"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!-- Toolbar with Back Button and Favorite Icon -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_collapseMode="parallax"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:navigationIcon="@drawable/baseline_arrow_back_24">
+
+            <TextView
+                android:id="@+id/mealStr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="Meal Name" />
+
+            <ImageButton
+                android:id="@+id/addToFavoriteBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:importantForAccessibility="no"
+                android:layout_gravity="center|end"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/baseline_shadow_favorite_24" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <!-- Main Content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="16dp">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/mealImg_card"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:layout_marginTop="20dp"
                 app:cardCornerRadius="10dp"
                 app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
@@ -33,21 +68,8 @@
                     android:layout_height="match_parent"
                     android:background="@color/black"
                     android:scaleType="centerCrop"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:contentDescription="Meal Image"/>
             </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:id="@+id/mealStr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="20dp"
-                android:textSize="40sp"
-
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@id/mealImg_card"
-                app:layout_constraintTop_toBottomOf="@id/mealImg_card"
-                tools:text="meal name" />
 
             <TextView
                 android:id="@+id/mealCategory"
@@ -55,9 +77,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="@id/mealStr"
-                app:layout_constraintTop_toBottomOf="@id/mealStr"
-                tools:text="meal Category" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mealImg_card"
+                tools:text="Meal Category" />
 
             <TextView
                 android:id="@+id/mealArea"
@@ -65,9 +87,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="@id/mealStr"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/mealCategory"
-                tools:text="meal Area" />
+                tools:text="Meal Area" />
 
             <TextView
                 android:id="@+id/titleInstructions"
@@ -78,7 +100,7 @@
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@id/mealStr"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/mealArea" />
 
             <TextView
@@ -87,9 +109,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@id/mealStr"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/titleInstructions"
-                tools:text="Mix all the ingredients in a bowl...\nAdd mayonnaise .\nand/or Sambal before cutting the sandwich (optional)." />
+                tools:text="Mix all the ingredients in a bowl..." />
 
             <TextView
                 android:id="@+id/titleIngredients"
@@ -100,21 +122,29 @@
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@id/mealStr"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/mealInstructions" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/mealIngredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/titleIngredients"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/titleIngredients" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mealIngredients">
 
-
+                <WebView
+                    android:id="@+id/webView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
