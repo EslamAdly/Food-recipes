@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.ratatouille.R
+import com.example.ratatouille.data.Ingredient
 import com.example.ratatouille.data.LocalMeal
 import com.example.ratatouille.dataBase.FavoriteDatabase
 import com.example.ratatouille.databinding.ActivityMealBinding
@@ -31,6 +32,7 @@ class MealActivity : AppCompatActivity(), MealView, MealClickListener {
         val id = intent.getStringExtra("mealId")
         lifecycleScope.launch(Dispatchers.IO) {
             presenter.getData(id.toString())
+            //presenter.isFavorite(id.toString())
         }
 
     }
@@ -67,7 +69,7 @@ class MealActivity : AppCompatActivity(), MealView, MealClickListener {
 
 
     private fun setupRecyclerView() {
-        adapter = IngredientsAdapter(emptyList(), this)
+        adapter = IngredientsAdapter(emptyList(),emptyList(), this)
         binding.mealIngredients.layoutManager = LinearLayoutManager(this)
         binding.mealIngredients.adapter = adapter
 
@@ -101,7 +103,7 @@ class MealActivity : AppCompatActivity(), MealView, MealClickListener {
         return videoHtml
     }
 
-    override fun showData(meal: LocalMeal) {
+    override fun showData(meal: LocalMeal,ingredients:List<Ingredient>) {
         binding.apply {
             mealStr.text = meal.strMeal
             mealArea.text = "Area: ${meal.strArea}"
@@ -110,7 +112,9 @@ class MealActivity : AppCompatActivity(), MealView, MealClickListener {
             Glide.with(this@MealActivity).load(meal.strMealThumb).into(mealImg)
             val videoHtml = getYoutubeVideoUrl(meal.strYoutube)
             webView.loadData(videoHtml, "text/html", "utf-8")
-            adapter.data = meal.ingredients
+            adapter.ingredientList=ingredients
+            adapter.measureList =meal.strMeasureList
+
             adapter.notifyDataSetChanged()
         }
 

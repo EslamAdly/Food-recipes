@@ -1,8 +1,11 @@
 package com.example.ratatouille.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class Ingredient(
-    val strIngredient: String,
+    @PrimaryKey(autoGenerate = false) val strIngredient: String,
     val strIngredientThump: String,
-    val strMeasure:String,
-    var isSelected:Boolean
+    var isSelected:Boolean,
 )

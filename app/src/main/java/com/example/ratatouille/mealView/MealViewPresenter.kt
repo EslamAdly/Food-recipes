@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.ratatouille.data.Ingredient
 import com.example.ratatouille.data.LocalMeal
 import com.example.ratatouille.data.Meal
+import com.example.ratatouille.data.relations.MealIngredientCrossRef
 import com.example.ratatouille.dataBase.MealDao
 import com.example.ratatouille.internetServices.MealRetrofitInstance
 import kotlinx.coroutines.Dispatchers
@@ -11,13 +12,15 @@ import kotlinx.coroutines.withContext
 
 class MealViewPresenter(private val view: MealView, private val mealDao: MealDao) {
     lateinit var localMeal: LocalMeal
+    lateinit var ingredients: List<Ingredient>
     suspend fun getData(mealID: String) {
         val mealResponse = MealRetrofitInstance.retrofitService.getMaelById(mealID).body()
         val meal = mealResponse?.meals?.firstOrNull()
         if (meal != null) {
             localMeal = fetchRemoteMealData(meal)
+            ingredients = fetchIngredients(meal)
             withContext(Dispatchers.Main) {
-                view.showData(localMeal)
+                view.showData(localMeal, ingredients)
             }
         } else {
             withContext(Dispatchers.Main) {
@@ -28,31 +31,39 @@ class MealViewPresenter(private val view: MealView, private val mealDao: MealDao
 
     suspend fun changeFavorite() {
         if (localMeal.isFavorite) {
-            localMeal.isFavorite = !localMeal.isFavorite
+            localMeal.isFavorite = false
             withContext(Dispatchers.IO) {
                 removeFromFavorite()
             }
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
                 view.removeFromFavorite()
             }
         } else {
-            localMeal.isFavorite = !localMeal.isFavorite
+            localMeal.isFavorite = true
             withContext(Dispatchers.IO) {
                 addToFavorite()
             }
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
                 view.addToFavorite()
             }
         }
     }
-
+    suspend fun isFavorite(mealID: String): Boolean {
+        var meal: LocalMeal? = null
+        meal= mealDao.getMealById(localMeal.idMeal)
+        if(meal!=null)return true
+        return false
+    }
     private fun removeFromFavorite() {
         Log.d("tt", localMeal.toString())
     }
 
-     fun addToFavorite() {
-        Log.d("tt", localMeal.toString())
-
+    private suspend fun addToFavorite() {
+        mealDao.insertMeal(localMeal)
+        ingredients.forEach {
+            mealDao.insertIngredient(it)
+            mealDao.insertMealIngredientCrossRef(MealIngredientCrossRef(localMeal.idMeal, it.strIngredient))
+        }
     }
 
     private fun fetchRemoteMealData(meal: Meal): LocalMeal {
@@ -64,8 +75,9 @@ class MealViewPresenter(private val view: MealView, private val mealDao: MealDao
             meal.strCategory,
             meal.strYoutube,
             meal.strInstructions,
+            fetchMeasureList(meal),
             false,
-            fetchIngredients(meal)
+            // fetchIngredients(meal)
         )
     }
 
@@ -74,17 +86,15 @@ class MealViewPresenter(private val view: MealView, private val mealDao: MealDao
         for (i in 1..20) {
             val ingredientName =
                 meal.javaClass.getMethod("getStrIngredient$i").invoke(meal) as? String
-            val ingredientMeasure =
-                meal.javaClass.getMethod("getStrMeasure$i").invoke(meal) as? String
-            if (!ingredientName.isNullOrBlank() && !ingredientMeasure.isNullOrBlank()) {
+
+            if (!ingredientName.isNullOrBlank() ) {
                 val ingredientThumbUrl =
                     "https://www.themealdb.com/images/ingredients/${ingredientName}-Small.png"
                 ingredients.add(
                     Ingredient(
                         ingredientName,
                         ingredientThumbUrl,
-                        ingredientMeasure,
-                        false
+                        false,
                     )
                 )
             }
@@ -92,8 +102,20 @@ class MealViewPresenter(private val view: MealView, private val mealDao: MealDao
         return ingredients
     }
 
+    private fun fetchMeasureList(meal: Meal): List<String> {
+        val measureList = mutableListOf<String>()
+        for (i in 1..20) {
+
+            val ingredientMeasure = meal.javaClass.getMethod("getStrMeasure$i").invoke(meal) as? String
+            if(!ingredientMeasure.isNullOrBlank()){
+                measureList.add(ingredientMeasure)
+            }
+        }
+        return measureList
+    }
+
     fun selectIngredient(position: Int) {
-        localMeal.ingredients[position].isSelected = !localMeal.ingredients[position].isSelected
-        Log.d("Ingredient", "Selected ingredient: ${localMeal.ingredients[position].strIngredient}")
+        ingredients[position].isSelected = !ingredients[position].isSelected
+        Log.d("Ingredient", "Selected ingredient: ${ingredients[position].strIngredient}")
     }
 }

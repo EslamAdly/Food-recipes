@@ -4,9 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.ratatouille.data.MealDB
+import androidx.room.TypeConverters
+import com.example.ratatouille.data.Ingredient
+import com.example.ratatouille.data.LocalMeal
+import com.example.ratatouille.data.relations.MealIngredientCrossRef
 
-@Database (entities = arrayOf(MealDB::class), version = 1)
+@Database (entities = [LocalMeal::class, Ingredient::class, MealIngredientCrossRef::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class FavoriteDatabase: RoomDatabase() {
     abstract fun getMealDao(): MealDao
     companion object {
