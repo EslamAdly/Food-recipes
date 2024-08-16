@@ -1,4 +1,4 @@
-package com.example.ratatouille.ui
+package com.example.ratatouille.homePage
 
 import android.content.Intent
 import android.os.Bundle
@@ -38,7 +38,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fetchRandomMeal()
-
         binding.randomMealImg.setOnClickListener {
             randomMeal?.let {
                 val intent = Intent(activity, MealActivity::class.java).apply {
@@ -52,7 +51,7 @@ class HomeFragment : Fragment() {
     private fun fetchRandomMeal() {
         try {
             lifecycleScope.launch(Dispatchers.IO) {
-                
+
                 val randomMealResponse = MealRetrofitInstance.retrofitService.getRandomMeal().body()
                 randomMeal = randomMealResponse?.meals?.firstOrNull()
 

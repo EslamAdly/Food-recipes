@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.ratatouille.ui.HomeFragment"
+        android:name="com.example.ratatouille.homePage.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.example.ratatouille.ui.FavoriteFragment"
+        android:name="com.example.ratatouille.favoriteMeals.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
 </navigation>
