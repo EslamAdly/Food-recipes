@@ -8,11 +8,18 @@ import androidx.room.TypeConverters
 import com.example.ratatouille.data.Ingredient
 import com.example.ratatouille.data.LocalMeal
 import com.example.ratatouille.data.relations.MealIngredientCrossRef
+import com.example.ratatouille.dataBase.dao.CrossRefDao
+import com.example.ratatouille.dataBase.dao.IngredientDao
+import com.example.ratatouille.dataBase.dao.MealDao
 
 @Database (entities = [LocalMeal::class, Ingredient::class, MealIngredientCrossRef::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class FavoriteDatabase: RoomDatabase() {
+
     abstract fun getMealDao(): MealDao
+    abstract fun getIngredientDao(): IngredientDao
+    abstract fun getCrossRefDao(): CrossRefDao
+
     companion object {
         @Volatile
         private var INSTANCE:FavoriteDatabase?=null
@@ -24,4 +31,5 @@ abstract class FavoriteDatabase: RoomDatabase() {
             }
         }
     }
+
 }

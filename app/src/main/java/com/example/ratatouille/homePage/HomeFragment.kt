@@ -42,6 +42,7 @@ class HomeFragment : Fragment() {
             randomMeal?.let {
                 val intent = Intent(activity, MealActivity::class.java).apply {
                     putExtra("mealId", it.idMeal)
+                    putExtra("source", "retrofit")
                 }
                 startActivity(intent)
             }
