@@ -11,7 +11,11 @@ import com.bumptech.glide.Glide
 import com.example.ratatouille.R
 import com.example.ratatouille.data.Ingredient
 
-class IngredientsAdapter(var ingredientList: List<Ingredient>,var measureList:List<String>,val clickListener: MealClickListener) :
+class IngredientsAdapter(
+    var ingredientList: List<Ingredient>,
+    var measureList: List<String>,
+    val clickListener: MealClickListener
+) :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -31,9 +35,11 @@ class IngredientsAdapter(var ingredientList: List<Ingredient>,var measureList:Li
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.ingredientTitle.text ="${measureList[position]} - ${ingredientList[position].strIngredient}"
-        Glide.with(holder.itemView.context).load(ingredientList[position].strIngredientThump).into(holder.ingredientImg)
-
+        holder.ingredientTitle.text =
+            "${measureList[position]} - ${ingredientList[position].strIngredient}"
+        Glide.with(holder.itemView.context).load(ingredientList[position].strIngredientThump)
+            .into(holder.ingredientImg)
+        holder.checkbox.isChecked = ingredientList[position].isSelected
         holder.checkbox.setOnClickListener {
             clickListener.onIngredientClick(position)
         }

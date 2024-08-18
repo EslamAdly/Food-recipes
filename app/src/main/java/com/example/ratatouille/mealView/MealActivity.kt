@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.webkit.WebChromeClient
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.ratatouille.R
@@ -12,43 +12,38 @@ import com.example.ratatouille.data.Ingredient
 import com.example.ratatouille.data.LocalMeal
 import com.example.ratatouille.dataBase.FavoriteDatabase
 import com.example.ratatouille.databinding.ActivityMealBinding
+import com.example.ratatouille.factory.MealViewModelFactory
+import com.example.ratatouille.internetServices.MealRetrofitInstance
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
-
-class MealActivity : AppCompatActivity(), MealView, MealClickListener {
+class MealActivity : AppCompatActivity(),MealClickListener {
 
     private lateinit var binding: ActivityMealBinding
     private lateinit var adapter: IngredientsAdapter
-    private lateinit var presenter: MealViewPresenter
+    private lateinit var viewModel:MealViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupUI()
-        setupPresenter()
+        setupViewModel()
         val id = intent.getStringExtra("mealId")
-        lifecycleScope.launch(Dispatchers.IO) {
-            presenter.getData(id.toString())
-            //presenter.isFavorite(id.toString())
+        val source = intent.getStringExtra("source")
+        if (id != null && source != null) {
+            viewModel.getData(id, source)
         }
-
+        observeViewModel()
     }
 
-    @Deprecated("This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.")
-    override fun onBackPressed() {
-        if (binding.webView.canGoBack()) {
-            binding.webView.goBack()
-        } else {
-            super.onBackPressed()
-        }
-    }
-
-    private fun setupPresenter() {
+    //setup
+    private fun setupViewModel() {
         val mealDao = FavoriteDatabase.getFavoriteDatabase(this).getMealDao()
-        presenter = MealViewPresenter(this, mealDao)
+        val ingredientDao = FavoriteDatabase.getFavoriteDatabase(this).getIngredientDao()
+        val crossRefDao = FavoriteDatabase.getFavoriteDatabase(this).getCrossRefDao()
+        val retrofit = MealRetrofitInstance.retrofitService
+        val factory = MealViewModelFactory(mealDao, ingredientDao, crossRefDao, retrofit)
+        viewModel = ViewModelProvider(this, factory)[MealViewModel::class.java]
     }
 
     private fun setupUI() {
@@ -60,13 +55,9 @@ class MealActivity : AppCompatActivity(), MealView, MealClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
         binding.addToFavoriteBtn.setOnClickListener {
-            lifecycleScope.launch {
-                presenter.changeFavorite()
-            }
+            viewModel.changeFavorite()
         }
     }
-
-
 
     private fun setupRecyclerView() {
         adapter = IngredientsAdapter(emptyList(),emptyList(), this)
@@ -86,6 +77,32 @@ class MealActivity : AppCompatActivity(), MealView, MealClickListener {
         binding.webView.webViewClient = WebViewClient()
     }
 
+    private fun observeViewModel(){
+        viewModel.mealData.observe(this){(meal,ingredients)->showData(meal, ingredients)
+
+        }
+        viewModel.isFavorite.observe(this) { isFavorite ->
+            if (isFavorite) {
+                binding.addToFavoriteBtn.setImageResource(R.drawable.baseline_red_favorite_24)
+            } else {
+                binding.addToFavoriteBtn.setImageResource(R.drawable.baseline_shadow_favorite_24)
+            }
+        }
+        viewModel.message.observe(this) { message ->
+            showMessage(message)
+        }
+    }
+
+
+    @Deprecated("This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.")
+    override fun onBackPressed() {
+        if (binding.webView.canGoBack()) {
+            binding.webView.goBack()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     private fun getYoutubeVideoUrl(strYoutube: String): String {
         // Extract video ID from YouTube URL
         val videoId = strYoutube.substringAfterLast("v=").substringBefore("&")
@@ -103,7 +120,7 @@ class MealActivity : AppCompatActivity(), MealView, MealClickListener {
         return videoHtml
     }
 
-    override fun showData(meal: LocalMeal,ingredients:List<Ingredient>) {
+    fun showData(meal: LocalMeal,ingredients:List<Ingredient>) {
         binding.apply {
             mealStr.text = meal.strMeal
             mealArea.text = "Area: ${meal.strArea}"
@@ -114,25 +131,15 @@ class MealActivity : AppCompatActivity(), MealView, MealClickListener {
             webView.loadData(videoHtml, "text/html", "utf-8")
             adapter.ingredientList=ingredients
             adapter.measureList =meal.strMeasureList
-
             adapter.notifyDataSetChanged()
         }
-
     }
 
-    override fun addToFavorite() {
-        binding.addToFavoriteBtn.setImageResource(R.drawable.baseline_red_favorite_24)
-    }
-
-    override fun removeFromFavorite() {
-        binding.addToFavoriteBtn.setImageResource(R.drawable.baseline_shadow_favorite_24)
-    }
-
-    override fun showMessage(message: String) {
+    fun showMessage(message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun onIngredientClick(position: Int) {
-        presenter.selectIngredient(position)
+        viewModel.selectIngredient(position)
     }
 }
