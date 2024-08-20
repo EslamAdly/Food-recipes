@@ -1,5 +1,6 @@
 package com.example.ratatouille.internetServices
 
+import com.example.ratatouille.data.DetailedMealResponse
 import com.example.ratatouille.data.MealResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -7,7 +8,20 @@ import retrofit2.http.Query
 
 interface MealAPI {
     @GET("random.php")
-    suspend fun getRandomMeal(): Response<MealResponse>
+    suspend fun getRandomMeal(): Response<DetailedMealResponse>
+
     @GET("lookup.php?i")
-    suspend fun getMaelById(@Query("i") mealId:String):Response<MealResponse>
+    suspend fun getMaelById(@Query("i") mealId:String):Response<DetailedMealResponse>
+
+    @GET("search.php?s")
+    suspend fun getMealsByName(@Query("s") mealName:String):Response<MealResponse>
+
+    @GET("filter.php?i")
+    suspend fun getMealsByIngredient(@Query("i") ingredientName:String):Response<MealResponse>
+
+    @GET("filter.php?a")
+    suspend fun getMealsByArea(@Query("a") areaName:String):Response<MealResponse>
+
+    @GET("filter.php?c")
+    suspend fun getMealsByCategory(@Query("c") categoryName:String):Response<MealResponse>
 }

@@ -19,8 +19,6 @@ class FavoriteFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViewModel()
-//        viewModel.getFavoriteMeals()
-
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

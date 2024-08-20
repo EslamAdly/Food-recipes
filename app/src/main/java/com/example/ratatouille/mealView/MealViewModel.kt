@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ratatouille.data.Ingredient
 import com.example.ratatouille.data.LocalMeal
-import com.example.ratatouille.data.Meal
+import com.example.ratatouille.data.DetailedMeal
 import com.example.ratatouille.data.relations.MealIngredientCrossRef
 import com.example.ratatouille.dataBase.dao.CrossRefDao
 import com.example.ratatouille.dataBase.dao.IngredientDao
@@ -158,25 +158,25 @@ class MealViewModel(
     }
 
     //convert remote meal to local meal methods
-    private fun remoteMealToLocalMeal(meal: Meal): LocalMeal {
+    private fun remoteMealToLocalMeal(detailedMeal: DetailedMeal): LocalMeal {
         return LocalMeal(
-            meal.idMeal,
-            meal.strMeal,
-            meal.strMealThumb,
-            meal.strArea,
-            meal.strCategory,
-            meal.strYoutube,
-            meal.strInstructions,
-            extractMeasureListFromMeal(meal),
+            detailedMeal.idMeal,
+            detailedMeal.strMeal,
+            detailedMeal.strMealThumb,
+            detailedMeal.strArea,
+            detailedMeal.strCategory,
+            detailedMeal.strYoutube,
+            detailedMeal.strInstructions,
+            extractMeasureListFromMeal(detailedMeal),
             false,
         )
     }
 
-    private fun extractIngredientsFromMeal(meal: Meal): List<Ingredient> {
+    private fun extractIngredientsFromMeal(detailedMeal: DetailedMeal): List<Ingredient> {
         val ingredients = mutableListOf<Ingredient>()
         for (i in 1..20) {
             val ingredientName =
-                meal.javaClass.getMethod("getStrIngredient$i").invoke(meal) as? String
+                detailedMeal.javaClass.getMethod("getStrIngredient$i").invoke(detailedMeal) as? String
 
             if (!ingredientName.isNullOrBlank()) {
                 val ingredientThumbUrl =
@@ -193,12 +193,12 @@ class MealViewModel(
         return ingredients
     }
 
-    private fun extractMeasureListFromMeal(meal: Meal): List<String> {
+    private fun extractMeasureListFromMeal(detailedMeal: DetailedMeal): List<String> {
         val measureList = mutableListOf<String>()
         for (i in 1..20) {
 
             val ingredientMeasure =
-                meal.javaClass.getMethod("getStrMeasure$i").invoke(meal) as? String
+                detailedMeal.javaClass.getMethod("getStrMeasure$i").invoke(detailedMeal) as? String
             if (!ingredientMeasure.isNullOrBlank()) {
                 measureList.add(ingredientMeasure)
             }
