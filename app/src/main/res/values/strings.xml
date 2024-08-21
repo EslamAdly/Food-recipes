@@ -10,4 +10,8 @@
     <string name="view_all">View All</string>
     <string name="instructions">Instructions :</string>
     <string name="ingredients">Ingredients</string>
+    <string name="category">Catgory</string>
+    <string name="ingredient">Ingredient</string>
+    <string name="area">Area</string>
+    <string name="name">name</string>
 </resources>

@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.example.ratatouille.data.Meal
+import com.example.ratatouille.R
+import com.example.ratatouille.data.DetailedMeal
 import com.example.ratatouille.databinding.FragmentHomeBinding
 import com.example.ratatouille.internetServices.MealRetrofitInstance
 import com.example.ratatouille.mealView.MealActivity
@@ -20,7 +22,7 @@ import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private var randomMeal: Meal? = null
+    private var randomMeal: DetailedMeal? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,14 +49,21 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
             }
         }
+        binding.searchBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        }
     }
 
     private fun fetchRandomMeal() {
         try {
             lifecycleScope.launch(Dispatchers.IO) {
 
-                val randomMealResponse = MealRetrofitInstance.retrofitService.getRandomMeal().body()
-                randomMeal = randomMealResponse?.meals?.firstOrNull()
+                val randomMealResponse = MealRetrofitInstance.retrofitService.getRandomMeal()
+                if(randomMealResponse.isSuccessful){
+                    Log.d("RandomMeal", "Random meal fetched successfully")
+
+                }
+                randomMeal = randomMealResponse.body()?.meals?.firstOrNull()
 
                 withContext(Dispatchers.Main) {
                     randomMeal?.let {
