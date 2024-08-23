@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("org.jetbrains.kotlin.kapt")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -40,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.firebase.auth)
     val nav_version = "2.7.7"
 
     implementation(libs.androidx.core.ktx)
@@ -68,4 +70,6 @@ dependencies {
     implementation ("androidx.room:room-runtime:2.6.1")
     kapt ("androidx.room:room-compiler:2.6.1")
     implementation( "androidx.room:room-ktx:2.6.1")
+        implementation("com.squareup.okhttp3:okhttp:4.11.0") // Replace with the latest version
+
 }

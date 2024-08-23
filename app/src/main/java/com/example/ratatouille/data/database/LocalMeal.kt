@@ -1,10 +1,9 @@
-package com.example.ratatouille.data
+package com.example.ratatouille.data.database
 
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "favorite_table")
+@Entity
 data class LocalMeal(
     @PrimaryKey(autoGenerate = false)
     val idMeal: String,

@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.ratatouille.R
-import com.example.ratatouille.data.DetailedMeal
+import com.example.ratatouille.data.remote.DetailedMeal
 import com.example.ratatouille.databinding.FragmentHomeBinding
 import com.example.ratatouille.internetServices.MealRetrofitInstance
 import com.example.ratatouille.mealView.MealActivity
@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
         return binding.root

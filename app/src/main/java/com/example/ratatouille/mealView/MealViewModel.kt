@@ -5,13 +5,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.ratatouille.data.Ingredient
-import com.example.ratatouille.data.LocalMeal
-import com.example.ratatouille.data.DetailedMeal
+import com.example.ratatouille.data.DayOfWeek
+import com.example.ratatouille.data.database.Ingredient
+import com.example.ratatouille.data.database.LocalMeal
+import com.example.ratatouille.data.database.MealsPlan
+import com.example.ratatouille.data.remote.DetailedMeal
 import com.example.ratatouille.data.relations.MealIngredientCrossRef
 import com.example.ratatouille.dataBase.dao.CrossRefDao
 import com.example.ratatouille.dataBase.dao.IngredientDao
 import com.example.ratatouille.dataBase.dao.MealDao
+import com.example.ratatouille.dataBase.dao.MealsPlanDao
 import com.example.ratatouille.internetServices.MealAPI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,6 +24,7 @@ class MealViewModel(
     private val mealDao: MealDao,
     private val ingredientDao: IngredientDao,
     private val crossRefDao: CrossRefDao,
+    private val mealsPlanDao: MealsPlanDao,
     private val retrofit: MealAPI
 ) : ViewModel() {
 
@@ -58,7 +62,7 @@ class MealViewModel(
                 ingredientsList = extractIngredientsFromMeal(meal)
                 val isFavorite = isFavorite(mealId)
                 withContext(Dispatchers.Main) {
-                    checkIngredientsInDatabase(mealId)
+                    checkIngredientsInDatabase()
                     _mealData.value = Pair(localMeal, ingredientsList)
                     _isFavorite.value = isFavorite
                 }
@@ -82,18 +86,30 @@ class MealViewModel(
         localMeal = mealWithIngredient.first().meal
         ingredientsList = mealWithIngredient.first().ingredients
         withContext(Dispatchers.Main) {
-//            _meal.value=mealWithIngredient.first().meal
-//            _ingredients.value=mealWithIngredient.first().ingredients
             _mealData.value =
                 Pair(mealWithIngredient.first().meal, mealWithIngredient.first().ingredients)
-            _isFavorite.value = true
+            _isFavorite.value = localMeal.isFavorite
         }
         isDataFetched=true
 
     }
 
+    //get meal state methods
     private suspend fun isFavorite(mealId: String): Boolean {
-        return mealDao.getMealById(mealId) != null
+        return  mealDao.getMealById(mealId)?.isFavorite ?: false
+    }
+
+    private suspend fun checkIngredientsInDatabase() {
+        ingredientsList.forEach {
+            val ingredient = ingredientDao.getIngredientByName(it.strIngredient)
+            it.isSelected = ingredient != null && ingredient.isSelected
+        }
+
+    }
+
+    private suspend fun isInPlan(mealId: String):Boolean{
+        val mealsPlan=mealsPlanDao.getMealsPlanByMealId(mealId)
+        return mealsPlan.isNotEmpty()
     }
 
     //favorite methods
@@ -101,7 +117,7 @@ class MealViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             if (_isFavorite.value == true) {
                 localMeal.isFavorite = false
-                removeFromFavorite()
+                removeFromDatabase()
                 withContext(Dispatchers.Main) {
                     _isFavorite.value = false
                 }
@@ -115,7 +131,7 @@ class MealViewModel(
         }
     }
 
-    private suspend fun addToFavorite() {
+    private suspend fun addMealToDatabase(localMeal: LocalMeal): Long {
         val result=mealDao.insertMeal(localMeal)
         ingredientsList.forEach {
             ingredientDao.insertIngredient(it)
@@ -126,7 +142,12 @@ class MealViewModel(
                 )
             )
         }
-        if(result>0){
+        return result
+    }
+
+    private suspend fun addToFavorite() {
+        val result=addMealToDatabase(localMeal)
+        if(result>0||isInPlan(localMeal.idMeal)){
             _message.postValue("Meal added to favorites")
         }
         else{
@@ -134,12 +155,18 @@ class MealViewModel(
         }
     }
 
-    private suspend fun removeFromFavorite() {
-        val result=mealDao.deleteMeal(localMeal)
-        ingredientsList.forEach {
-            crossRefDao.deleteMealIngredientCrossRef(MealIngredientCrossRef(localMeal.idMeal, it.strIngredient))
-            if(!it.isSelected){
-                ingredientDao.deleteIngredient(it)
+    private suspend fun removeFromDatabase() {
+        val result:Int
+        if(isInPlan(localMeal.idMeal)){
+            result=mealDao.updateFavoriteStatus(localMeal.idMeal, false)
+        }
+        else{
+            result=mealDao.deleteMeal(localMeal)
+            ingredientsList.forEach {
+                crossRefDao.deleteMealIngredientCrossRef(MealIngredientCrossRef(localMeal.idMeal, it.strIngredient))
+                if(!it.isSelected){
+                    ingredientDao.deleteIngredient(it)
+                }
             }
         }
         if(result>0){
@@ -147,14 +174,6 @@ class MealViewModel(
         }else{
             _message.postValue("Error removing meal from favorites")
         }
-    }
-
-    private suspend fun checkIngredientsInDatabase(ingredientName: String) {
-        ingredientsList.forEach {
-            val ingredient = ingredientDao.getIngredientByName(it.strIngredient)
-            it.isSelected = ingredient != null && ingredient.isSelected
-        }
-
     }
 
     //convert remote meal to local meal methods
@@ -206,6 +225,31 @@ class MealViewModel(
         return measureList
     }
 
+    //plan meals methods
+    fun addMealToPlan(dayOfWeek: DayOfWeek) {
+        Log.d("weekDebug", dayOfWeek.toString())
+
+        viewModelScope.launch (Dispatchers.IO) {
+            val planResult= mealsPlanDao.insertMealsPlan(
+                mealsPlan = MealsPlan(
+                    dayOfWeek,
+                    localMeal.idMeal,
+                    localMeal.strMeal,
+                    localMeal.strMealThumb
+                )
+            )
+            val dataResult=addMealToDatabase(localMeal)
+            if(planResult>0){
+                withContext(Dispatchers.Main){
+                    _message.value="Meal added to $dayOfWeek plan"
+                }
+            }else{
+                withContext(Dispatchers.Main){
+                    _message.value="Error adding meal to plan"
+                }
+            }
+        }
+    }
 
     fun selectIngredient(position: Int) {
         ingredientsList[position].isSelected = !ingredientsList[position].isSelected
@@ -214,4 +258,5 @@ class MealViewModel(
             ingredientDao.insertIngredient(ingredientsList[position])
         }
     }
+
 }

@@ -1,4 +1,4 @@
-package com.example.ratatouille.data
+package com.example.ratatouille.data.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
