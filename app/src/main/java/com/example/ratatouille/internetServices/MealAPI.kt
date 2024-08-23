@@ -1,7 +1,7 @@
 package com.example.ratatouille.internetServices
 
-import com.example.ratatouille.data.DetailedMealResponse
-import com.example.ratatouille.data.MealResponse
+import com.example.ratatouille.data.remote.DetailedMealResponse
+import com.example.ratatouille.data.remote.MealResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

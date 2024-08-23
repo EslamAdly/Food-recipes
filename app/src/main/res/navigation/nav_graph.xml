@@ -24,4 +24,14 @@
         android:name="com.example.ratatouille.favoriteMeals.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/planFragment"
+        android:name="com.example.ratatouille.planMeals.PlanMealsFragment"
+        android:label="fragment_plan_meals"
+        tools:layout="@layout/fragment_plan_meals" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.ratatouille.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

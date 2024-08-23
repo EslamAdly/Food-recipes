@@ -9,8 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ratatouille.R
-import com.example.ratatouille.data.LocalMeal
-import com.example.ratatouille.databinding.MealViewBinding
+import com.example.ratatouille.data.database.LocalMeal
 import com.example.ratatouille.mealView.MealActivity
 
 class FavoriteMealsAdapter (var meals:List<LocalMeal>):RecyclerView.Adapter<FavoriteMealsAdapter.MealViewHolder>(){

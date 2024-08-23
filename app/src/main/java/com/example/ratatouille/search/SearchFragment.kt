@@ -13,8 +13,6 @@ import com.example.ratatouille.databinding.FragmentSearchBinding
 import com.example.ratatouille.factory.SearchViewModelFactory
 import com.example.ratatouille.internetServices.MealRetrofitInstance
 import com.example.ratatouille.makeSnackBar
-import com.google.android.material.snackbar.Snackbar
-
 
 class SearchFragment : Fragment() {
 

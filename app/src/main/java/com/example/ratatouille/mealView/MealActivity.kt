@@ -1,6 +1,8 @@
 package com.example.ratatouille.mealView
 
 import android.os.Bundle
+import android.util.Log
+import android.view.MenuItem
 import android.webkit.WebChromeClient
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
@@ -8,19 +10,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.ratatouille.R
-import com.example.ratatouille.data.Ingredient
-import com.example.ratatouille.data.LocalMeal
+import com.example.ratatouille.data.DayOfWeek
+import com.example.ratatouille.data.database.Ingredient
+import com.example.ratatouille.data.database.LocalMeal
 import com.example.ratatouille.dataBase.FavoriteDatabase
 import com.example.ratatouille.databinding.ActivityMealBinding
 import com.example.ratatouille.factory.MealViewModelFactory
 import com.example.ratatouille.internetServices.MealRetrofitInstance
-import com.google.android.material.snackbar.Snackbar
+import com.example.ratatouille.makeSnackBar
 
-class MealActivity : AppCompatActivity(),MealClickListener {
+class MealActivity : AppCompatActivity(), MealClickListener {
 
     private lateinit var binding: ActivityMealBinding
     private lateinit var adapter: IngredientsAdapter
-    private lateinit var viewModel:MealViewModel
+    private lateinit var viewModel: MealViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,8 +44,10 @@ class MealActivity : AppCompatActivity(),MealClickListener {
         val mealDao = FavoriteDatabase.getFavoriteDatabase(this).getMealDao()
         val ingredientDao = FavoriteDatabase.getFavoriteDatabase(this).getIngredientDao()
         val crossRefDao = FavoriteDatabase.getFavoriteDatabase(this).getCrossRefDao()
+        val mealsPlanDao = FavoriteDatabase.getFavoriteDatabase(this).getMealsPlanDao()
         val retrofit = MealRetrofitInstance.retrofitService
-        val factory = MealViewModelFactory(mealDao, ingredientDao, crossRefDao, retrofit)
+        val factory =
+            MealViewModelFactory(mealDao, ingredientDao, crossRefDao, mealsPlanDao, retrofit)
         viewModel = ViewModelProvider(this, factory)[MealViewModel::class.java]
     }
 
@@ -57,10 +62,54 @@ class MealActivity : AppCompatActivity(),MealClickListener {
         binding.addToFavoriteBtn.setOnClickListener {
             viewModel.changeFavorite()
         }
+        binding.addToPlanBtn.setOnClickListener {
+            val popupMenu = androidx.appcompat.widget.PopupMenu(this, binding.addToPlanBtn)
+            popupMenu.menuInflater.inflate(R.menu.week_days_menu, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener {
+                item ->daySelect(item)
+
+            }
+            popupMenu.show()
+        }
+    }
+
+    private fun daySelect(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.saturday -> {
+                Log.d("weekDebug", "Saturday clicked")
+                viewModel.addMealToPlan(DayOfWeek.SATURDAY)
+                true
+            }
+            R.id.sunday -> {
+                viewModel.addMealToPlan(DayOfWeek.SUNDAY)
+                true
+            }
+            R.id.monday -> {
+                viewModel.addMealToPlan(DayOfWeek.MONDAY)
+                true
+            }
+            R.id.tuesday -> {
+                viewModel.addMealToPlan(DayOfWeek.TUESDAY)
+                true
+            }
+            R.id.wednesday -> {
+                viewModel.addMealToPlan(DayOfWeek.WEDNESDAY)
+                true
+            }
+            R.id.thursday -> {
+                viewModel.addMealToPlan(DayOfWeek.THURSDAY)
+                true
+            }
+            R.id.friday -> {
+                viewModel.addMealToPlan(DayOfWeek.FRIDAY)
+                true
+            }
+            else -> false
+        }
     }
 
     private fun setupRecyclerView() {
-        adapter = IngredientsAdapter(emptyList(),emptyList(), this)
+        adapter = IngredientsAdapter(emptyList(), emptyList(), this)
         binding.mealIngredients.layoutManager = LinearLayoutManager(this)
         binding.mealIngredients.adapter = adapter
 
@@ -77,8 +126,9 @@ class MealActivity : AppCompatActivity(),MealClickListener {
         binding.webView.webViewClient = WebViewClient()
     }
 
-    private fun observeViewModel(){
-        viewModel.mealData.observe(this){(meal,ingredients)->showData(meal, ingredients)
+    private fun observeViewModel() {
+        viewModel.mealData.observe(this) { (meal, ingredients) ->
+            showData(meal, ingredients)
 
         }
         viewModel.isFavorite.observe(this) { isFavorite ->
@@ -89,7 +139,7 @@ class MealActivity : AppCompatActivity(),MealClickListener {
             }
         }
         viewModel.message.observe(this) { message ->
-            showMessage(message)
+            makeSnackBar(message, binding.root)
         }
     }
 
@@ -120,7 +170,7 @@ class MealActivity : AppCompatActivity(),MealClickListener {
         return videoHtml
     }
 
-    fun showData(meal: LocalMeal,ingredients:List<Ingredient>) {
+    fun showData(meal: LocalMeal, ingredients: List<Ingredient>) {
         binding.apply {
             mealStr.text = meal.strMeal
             mealArea.text = "Area: ${meal.strArea}"
@@ -129,14 +179,10 @@ class MealActivity : AppCompatActivity(),MealClickListener {
             Glide.with(this@MealActivity).load(meal.strMealThumb).into(mealImg)
             val videoHtml = getYoutubeVideoUrl(meal.strYoutube)
             webView.loadData(videoHtml, "text/html", "utf-8")
-            adapter.ingredientList=ingredients
-            adapter.measureList =meal.strMeasureList
+            adapter.ingredientList = ingredients
+            adapter.measureList = meal.strMeasureList
             adapter.notifyDataSetChanged()
         }
-    }
-
-    fun showMessage(message: String) {
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun onIngredientClick(position: Int) {

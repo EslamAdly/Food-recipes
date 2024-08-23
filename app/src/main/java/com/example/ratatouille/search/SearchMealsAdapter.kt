@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ratatouille.R
-import com.example.ratatouille.data.Meal
+import com.example.ratatouille.data.remote.Meal
 import com.example.ratatouille.mealView.MealActivity
 
 class SearchMealsAdapter(var meals:List<Meal>): RecyclerView.Adapter<SearchMealsAdapter.MealViewHolder>() {

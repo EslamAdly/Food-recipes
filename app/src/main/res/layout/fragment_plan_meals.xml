@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".planMeals.PlanMealsFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_collapseMode="parallax"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <TextView
+                android:id="@+id/mealStr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/planMeals"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="@string/planMeals" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:paddingHorizontal="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Saturday -->
+            <TextView
+                android:id="@+id/satTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/saturday"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/satRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:scrollbars="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/satTitle"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <!-- Sunday -->
+            <TextView
+                android:id="@+id/sunTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/sunday"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/satRecyclerView"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/sunRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:scrollbars="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sunTitle"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <!-- Monday -->
+            <TextView
+                android:id="@+id/monTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/monday"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sunRecyclerView"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/monRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:scrollbars="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/monTitle"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <!-- Tuesday -->
+            <TextView
+                android:id="@+id/tueTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/tuesday"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/monRecyclerView"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tueRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:scrollbars="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tueTitle"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <!-- Wednesday -->
+            <TextView
+                android:id="@+id/wedTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/wednesday"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tueRecyclerView"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/wedRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:scrollbars="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/wedTitle"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <!-- Thursday -->
+            <TextView
+                android:id="@+id/thuTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/thursday"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/wedRecyclerView"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/thuRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:scrollbars="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/thuTitle"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <!-- Friday -->
+            <TextView
+                android:id="@+id/friTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/friday"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/thuRecyclerView"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/friRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:scrollbars="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/friTitle"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

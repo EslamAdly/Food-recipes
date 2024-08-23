@@ -6,9 +6,9 @@
         android:icon="@drawable/baseline_home_24"
         android:title="@string/home" />
     <item
-        android:id="@+id/searchFragment"
-        android:icon="@drawable/baseline_search_24"
-        android:title="@string/search" />
+        android:id="@+id/planFragment"
+        android:icon="@drawable/baseline_calendar_month_24"
+        android:title="@string/planMeals" />
 
     <item
         android:id="@+id/favoriteFragment"

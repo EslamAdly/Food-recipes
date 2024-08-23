@@ -1,4 +1,4 @@
-package com.example.ratatouille.data
+package com.example.ratatouille.data.remote
 
 data class Category(
     val idCategory: String,

@@ -6,8 +6,7 @@ import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
-import com.example.ratatouille.data.LocalMeal
-import com.example.ratatouille.data.relations.MealIngredientCrossRef
+import com.example.ratatouille.data.database.LocalMeal
 import com.example.ratatouille.data.relations.MealWithIngredient
 
 @Dao
@@ -16,14 +15,20 @@ interface MealDao {
     suspend fun insertMeal(meal: LocalMeal):Long
 
     @Transaction
-    @Query("SELECT * FROM favorite_table WHERE idMeal = :mealId")
+    @Query("SELECT * FROM localmeal WHERE idMeal = :mealId")
     suspend fun getMealsWithIngredients(mealId: String): List<MealWithIngredient>
 
-    @Query("SELECT * FROM favorite_table")
+    @Query("SELECT * FROM localmeal")
      fun getAllMeals(): LiveData<List<LocalMeal>>
 
-    @Query("SELECT * FROM favorite_table WHERE idMeal = :mealId")
+    @Query("SELECT * FROM localmeal WHERE isFavorite = 1")
+     fun getFavoriteMeals(): LiveData<List<LocalMeal>>
+
+    @Query("SELECT * FROM localmeal WHERE idMeal = :mealId")
     suspend fun getMealById(mealId: String): LocalMeal?
+
+    @Query("UPDATE LocalMeal SET isFavorite = :isFavorite WHERE idMeal = :mealId")
+    suspend fun updateFavoriteStatus(mealId: String, isFavorite: Boolean):Int
 
     @Delete
     suspend fun deleteMeal(meal: LocalMeal):Int
