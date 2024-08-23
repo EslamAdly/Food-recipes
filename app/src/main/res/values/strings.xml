@@ -22,6 +22,8 @@
     <string name="wednesday">Wednesday</string>
     <string name="thursday">Thursday</string>
     <string name="friday">Friday</string>
+    <string name="default_web_client_id">521931857079-92d5ot7mhaqr7umfdgj7j191rlhcm021.apps.googleusercontent.com</string>
+    <string name="profile">Profile</string>
 
 
 </resources>

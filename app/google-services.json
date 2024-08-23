@@ -12,7 +12,12 @@
           "package_name": "com.example.ratatouille"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "521931857079-92d5ot7mhaqr7umfdgj7j191rlhcm021.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAo_rH7KAi6BqVMzIpSP2fslqsf0ZNYoQQ"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "521931857079-92d5ot7mhaqr7umfdgj7j191rlhcm021.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
