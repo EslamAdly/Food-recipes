@@ -11,6 +11,9 @@ interface IngredientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertIngredient(ingredient: Ingredient)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(ingredients: List<Ingredient>)
+
     @Query("SELECT * FROM ingredient")
     suspend fun getAllIngredients(): List<Ingredient>
 
@@ -22,5 +25,6 @@ interface IngredientDao {
 
     @Delete
     suspend fun deleteIngredient(ingredient: Ingredient):Int
-
+    @Query("DELETE FROM Ingredient")
+    suspend fun clearIngredients()
 }

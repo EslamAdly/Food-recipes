@@ -1,5 +1,6 @@
 package com.example.ratatouille.internetServices
 
+import com.example.ratatouille.data.remote.CategoryResponse
 import com.example.ratatouille.data.remote.DetailedMealResponse
 import com.example.ratatouille.data.remote.MealResponse
 import retrofit2.Response
@@ -24,4 +25,7 @@ interface MealAPI {
 
     @GET("filter.php?c")
     suspend fun getMealsByCategory(@Query("c") categoryName:String):Response<MealResponse>
+    @GET("categories.php")
+    suspend fun getCategories():Response<CategoryResponse>
+
 }

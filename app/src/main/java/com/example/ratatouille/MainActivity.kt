@@ -1,24 +1,33 @@
 package com.example.ratatouille
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.ratatouille.homePage.HomeActivity
+import com.example.ratatouille.login.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var firebaseAuth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setupNavigation()
-    }
-    private fun setupNavigation() {
-        val bottomNavbar = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        val navController = navHostFragment.navController
+        firebaseAuth = FirebaseAuth.getInstance()
+        val currentUser = firebaseAuth.currentUser
 
-        //connect navbar with controller
-        NavigationUI.setupWithNavController(bottomNavbar, navController)
+            if (currentUser == null) {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+            else{
+                startActivity(Intent(this, HomeActivity::class.java))
+            }
+
+
     }
+
+
 }

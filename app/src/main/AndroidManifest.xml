@@ -15,6 +15,15 @@
         android:theme="@style/Theme.Ratatouille"
         tools:targetApi="31">
         <activity
+            android:name=".register.registerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".homePage.HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".mealView.MealActivity"
             android:exported="false" />
         <activity
