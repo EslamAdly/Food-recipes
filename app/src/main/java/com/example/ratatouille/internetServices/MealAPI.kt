@@ -2,6 +2,7 @@ package com.example.ratatouille.internetServices
 
 import com.example.ratatouille.data.remote.CategoryResponse
 import com.example.ratatouille.data.remote.DetailedMealResponse
+import com.example.ratatouille.data.remote.IngredientResponse
 import com.example.ratatouille.data.remote.MealResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -14,6 +15,7 @@ interface MealAPI {
     @GET("lookup.php?i")
     suspend fun getMaelById(@Query("i") mealId:String):Response<DetailedMealResponse>
 
+    //search
     @GET("search.php?s")
     suspend fun getMealsByName(@Query("s") mealName:String):Response<MealResponse>
 
@@ -25,7 +27,13 @@ interface MealAPI {
 
     @GET("filter.php?c")
     suspend fun getMealsByCategory(@Query("c") categoryName:String):Response<MealResponse>
+    //list
     @GET("categories.php")
     suspend fun getCategories():Response<CategoryResponse>
 
+    @GET("list.php?i=list")
+    suspend fun getIngredients():Response<IngredientResponse>
+//
+//    @GET("list.php?a=list")
+//    suspend fun getAreas():Response<CategoryResponse>
 }
