@@ -1,19 +1,13 @@
 package com.example.ratatouille.login
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.ratatouille.homePage.HomeActivity
+import com.example.ratatouille.ContainerPage.ContainerActivity
 import com.example.ratatouille.R
-import com.example.ratatouille.data.database.Ingredient
-import com.example.ratatouille.data.database.LocalMeal
-import com.example.ratatouille.data.database.MealsPlan
-import com.example.ratatouille.data.relations.MealIngredientCrossRef
-import com.example.ratatouille.dataBase.FavoriteDatabase
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -21,7 +15,6 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -94,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(TAG, "firebaseAuthWithGoogle1: success")
                     lifecycleScope.launch(Dispatchers.IO) {
                         withContext(Dispatchers.Main) {
-                            val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                            val intent = Intent(this@LoginActivity, ContainerActivity::class.java)
                             startActivity(intent)
                             finish()
                         }

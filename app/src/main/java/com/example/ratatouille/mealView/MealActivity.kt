@@ -16,7 +16,7 @@ import com.example.ratatouille.data.database.LocalMeal
 import com.example.ratatouille.dataBase.FavoriteDatabase
 import com.example.ratatouille.databinding.ActivityMealBinding
 import com.example.ratatouille.factory.MealViewModelFactory
-import com.example.ratatouille.internetServices.MealRetrofitInstance
+import com.example.ratatouille.internetServices.API.MealRetrofitInstance
 import com.example.ratatouille.makeSnackBar
 
 class MealActivity : AppCompatActivity(), MealClickListener {

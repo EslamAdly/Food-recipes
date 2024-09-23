@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ratatouille.data.remote.Meal
-import com.example.ratatouille.internetServices.MealAPI
+import com.example.ratatouille.internetServices.API.MealAPI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.ratatouille.dataBase.dao.IngredientDao
 import com.example.ratatouille.displayIngredients.DisplayIngredientViewModel
-import com.example.ratatouille.internetServices.MealAPI
+import com.example.ratatouille.internetServices.API.MealAPI
 
 class DisplayIngredientViewModelFactory(
     private val ingredientDao: IngredientDao,

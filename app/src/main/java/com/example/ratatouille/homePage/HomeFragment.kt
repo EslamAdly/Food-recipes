@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.ratatouille.R
 import com.example.ratatouille.data.remote.DetailedMeal
 import com.example.ratatouille.databinding.FragmentHomeBinding
-import com.example.ratatouille.internetServices.MealRetrofitInstance
+import com.example.ratatouille.internetServices.API.MealRetrofitInstance
 import com.example.ratatouille.mealView.MealActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

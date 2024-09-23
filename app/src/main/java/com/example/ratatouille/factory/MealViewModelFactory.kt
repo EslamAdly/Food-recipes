@@ -6,7 +6,7 @@ import com.example.ratatouille.dataBase.dao.CrossRefDao
 import com.example.ratatouille.dataBase.dao.IngredientDao
 import com.example.ratatouille.dataBase.dao.MealDao
 import com.example.ratatouille.dataBase.dao.MealsPlanDao
-import com.example.ratatouille.internetServices.MealAPI
+import com.example.ratatouille.internetServices.API.MealAPI
 import com.example.ratatouille.mealView.MealViewModel
 
 class MealViewModelFactory(

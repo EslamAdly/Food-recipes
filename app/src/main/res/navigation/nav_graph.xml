@@ -35,7 +35,7 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
-        android:id="@+id/displayIngredients"
+        android:id="@+id/displayIngredientsFragment"
         android:name="com.example.ratatouille.displayIngredients.DisplayIngredients"
         android:label="fragment_display_ingredients"
         tools:layout="@layout/fragment_display_ingredients" />
