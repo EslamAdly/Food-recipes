@@ -1,4 +1,4 @@
-package com.example.ratatouille.internetServices
+package com.example.ratatouille.internetServices.API
 
 import com.example.ratatouille.data.remote.CategoryResponse
 import com.example.ratatouille.data.remote.DetailedMealResponse

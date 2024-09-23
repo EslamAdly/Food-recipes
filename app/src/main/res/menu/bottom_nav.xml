@@ -16,8 +16,8 @@
         android:title="@string/favorite" />
 
     <item
-        android:id="@+id/displayIngredients"
-        android:icon="@drawable/baseline_search_24"
+        android:id="@+id/displayIngredientsFragment"
+        android:icon="@drawable/baseline_shopping_bag_48"
         android:title="@string/search" />
 
     <item

@@ -21,7 +21,7 @@
             android:name=".login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".homePage.HomeActivity"
+            android:name=".ContainerPage.ContainerActivity"
             android:exported="false" />
         <activity
             android:name=".mealView.MealActivity"

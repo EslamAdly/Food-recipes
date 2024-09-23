@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ratatouille.dataBase.FavoriteDatabase
 import com.example.ratatouille.databinding.FragmentDisplayIngredientsBinding
 import com.example.ratatouille.factory.DisplayIngredientViewModelFactory
-import com.example.ratatouille.internetServices.MealRetrofitInstance
+import com.example.ratatouille.internetServices.API.MealRetrofitInstance
 import com.example.ratatouille.mealView.IngredientsAdapter
 import com.example.ratatouille.mealView.MealClickListener
 

@@ -1,6 +1,5 @@
 package com.example.ratatouille.displayIngredients
 
-import android.icu.text.Transliterator.Position
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.ratatouille.data.database.Ingredient
 import com.example.ratatouille.data.remote.MealX
 import com.example.ratatouille.dataBase.dao.IngredientDao
-import com.example.ratatouille.internetServices.MealAPI
+import com.example.ratatouille.internetServices.API.MealAPI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

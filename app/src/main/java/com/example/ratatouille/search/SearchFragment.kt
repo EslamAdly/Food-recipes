@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ratatouille.R
 import com.example.ratatouille.databinding.FragmentSearchBinding
 import com.example.ratatouille.factory.SearchViewModelFactory
-import com.example.ratatouille.internetServices.MealRetrofitInstance
+import com.example.ratatouille.internetServices.API.MealRetrofitInstance
 import com.example.ratatouille.makeSnackBar
 
 class SearchFragment : Fragment() {

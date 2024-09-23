@@ -1,15 +1,5 @@
 package com.example.ratatouille.homePage
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
-import com.example.ratatouille.internetServices.MealRetrofitInstance
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-
 //class HomeViewModel: ViewModel() {
 //    private  var randomMealLiveData= MutableLiveData<Meal>()
 //    private fun getRandomMeal() {

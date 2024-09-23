@@ -3,7 +3,7 @@ package com.example.ratatouille
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.ratatouille.homePage.HomeActivity
+import com.example.ratatouille.ContainerPage.ContainerActivity
 import com.example.ratatouille.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
             else{
-                startActivity(Intent(this, HomeActivity::class.java))
+                startActivity(Intent(this, ContainerActivity::class.java))
             }
 
 
