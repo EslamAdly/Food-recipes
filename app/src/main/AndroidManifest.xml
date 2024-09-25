@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Ratatouille"
+        android:theme="@style/Theme.App.Starting"
         tools:targetApi="31">
         <activity
             android:name=".register.registerActivity"
@@ -22,13 +22,15 @@
             android:exported="false" />
         <activity
             android:name=".ContainerPage.ContainerActivity"
+            android:theme="@style/Theme.Ratatouille"
             android:exported="false" />
         <activity
             android:name=".mealView.MealActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.App.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
