@@ -77,4 +77,6 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     // Play services auth
     implementation("com.google.android.gms:play-services-auth:21.2.0")
+    //splash screen
+    implementation ("androidx.core:core-splashscreen:1.0.1")
 }

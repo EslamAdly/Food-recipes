@@ -6,4 +6,9 @@
     </style>
 
     <style name="Theme.Ratatouille" parent="Base.Theme.Ratatouille" />
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="postSplashScreenTheme">@style/Theme.Ratatouille</item>
+    </style>
 </resources>
