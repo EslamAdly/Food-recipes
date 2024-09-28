@@ -3,7 +3,7 @@ package com.example.ratatouille.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.ratatouille.dataBase.dao.IngredientDao
-import com.example.ratatouille.displayIngredients.DisplayIngredientViewModel
+import com.example.ratatouille.ui.displayIngredients.DisplayIngredientViewModel
 import com.example.ratatouille.internetServices.API.MealAPI
 
 class DisplayIngredientViewModelFactory(
