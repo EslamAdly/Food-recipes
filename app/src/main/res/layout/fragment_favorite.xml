@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".favoriteMeals.FavoriteFragment">
+    tools:context=".ui.favoriteMeals.FavoriteFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -25,9 +25,9 @@
                 android:layout_gravity="start"
                 android:text="@string/favorite"
                 android:textColor="@android:color/black"
-                android:textSize="24sp"
+                android:textSize="36sp"
                 android:textStyle="bold"
-                tools:text="Meal Name" />
+                 />
 
 
         </androidx.appcompat.widget.Toolbar>

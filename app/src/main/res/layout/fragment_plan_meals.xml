@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".planMeals.PlanMealsFragment">
+    tools:context=".ui.planMeals.PlanMealsFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
                 android:layout_gravity="start"
                 android:text="@string/planMeals"
                 android:textColor="@android:color/black"
-                android:textSize="24sp"
+                android:textSize="36sp"
                 android:textStyle="bold"
                 tools:text="@string/planMeals" />
         </androidx.appcompat.widget.Toolbar>
@@ -50,6 +50,7 @@
                 android:text="@string/saturday"
                 android:textSize="36sp"
                 android:textStyle="bold"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
             <androidx.recyclerview.widget.RecyclerView

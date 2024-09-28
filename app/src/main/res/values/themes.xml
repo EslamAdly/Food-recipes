@@ -3,8 +3,14 @@
     <style name="Base.Theme.Ratatouille" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@color/white</item>
     </style>
+    <style name="MySnackBarStyle" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:background">@color/black</item>
+        <item name="android:textColor">@color/white</item>
 
+    </style>
     <style name="Theme.Ratatouille" parent="Base.Theme.Ratatouille" />
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">

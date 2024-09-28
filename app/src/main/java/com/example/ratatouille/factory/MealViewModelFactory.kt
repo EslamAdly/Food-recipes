@@ -7,7 +7,7 @@ import com.example.ratatouille.dataBase.dao.IngredientDao
 import com.example.ratatouille.dataBase.dao.MealDao
 import com.example.ratatouille.dataBase.dao.MealsPlanDao
 import com.example.ratatouille.internetServices.API.MealAPI
-import com.example.ratatouille.mealView.MealViewModel
+import com.example.ratatouille.ui.mealView.MealViewModel
 
 class MealViewModelFactory(
     private val mealDao: MealDao,
