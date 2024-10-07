@@ -12,7 +12,7 @@ import com.example.ratatouille.data.database.MealsPlan
 @Dao
 interface MealsPlanDao {
     @Upsert
-    suspend fun insertMealsPlan(mealsPlan: MealsPlan):Long
+    suspend fun insertMealsPlan(mealsPlan: MealsPlan): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(mealPlans: List<MealsPlan>)
@@ -31,6 +31,7 @@ interface MealsPlanDao {
 
     @Query("DELETE FROM MealsPlan WHERE mealId = :mealId AND dayOfWeek = :dayOfWeek")
     suspend fun deleteMealsPlanById(mealId: String, dayOfWeek: DayOfWeek)
+
     @Query("DELETE FROM MealsPlan")
     suspend fun clearMealPlans()
 }

@@ -13,7 +13,7 @@ interface MealAPI {
     suspend fun getRandomMeal(): Response<DetailedMealResponse>
 
     @GET("lookup.php?i")
-    suspend fun getMaelById(@Query("i") mealId:String):Response<DetailedMealResponse>
+    suspend fun getMealById(@Query("i") mealId:String):Response<DetailedMealResponse>
 
     //search
     @GET("search.php?s")

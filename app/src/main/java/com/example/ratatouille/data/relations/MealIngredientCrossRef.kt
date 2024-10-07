@@ -6,4 +6,6 @@ import androidx.room.Entity
 data class MealIngredientCrossRef(
     val idMeal: String,
     val strIngredient: String
-)
+){
+    constructor():this("","")
+}

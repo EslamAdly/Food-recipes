@@ -18,7 +18,9 @@ import com.example.ratatouille.dataBase.FavoriteDatabase
 import com.example.ratatouille.databinding.ActivityMealBinding
 import com.example.ratatouille.factory.MealViewModelFactory
 import com.example.ratatouille.internetServices.API.MealRetrofitInstance
+import com.example.ratatouille.internetServices.firebase.FirebaseHelper
 import com.example.ratatouille.makeToast
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MealActivity : AppCompatActivity(), MealClickListener {
 
@@ -46,9 +48,10 @@ class MealActivity : AppCompatActivity(), MealClickListener {
         val ingredientDao = FavoriteDatabase.getFavoriteDatabase(this).getIngredientDao()
         val crossRefDao = FavoriteDatabase.getFavoriteDatabase(this).getCrossRefDao()
         val mealsPlanDao = FavoriteDatabase.getFavoriteDatabase(this).getMealsPlanDao()
+        val firebaseHelper = FirebaseHelper(FirebaseFirestore.getInstance())
         val retrofit = MealRetrofitInstance.retrofitService
         val factory =
-            MealViewModelFactory(mealDao, ingredientDao, crossRefDao, mealsPlanDao, retrofit)
+            MealViewModelFactory(mealDao, ingredientDao, crossRefDao, mealsPlanDao, retrofit, firebaseHelper)
         viewModel = ViewModelProvider(this, factory)[MealViewModel::class.java]
     }
 
@@ -61,7 +64,7 @@ class MealActivity : AppCompatActivity(), MealClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
         binding.addToFavoriteBtn.setOnClickListener {
-            viewModel.changeFavorite()
+            viewModel.toggleFavorite()
         }
         binding.addToPlanBtn.setOnClickListener {
             val popupMenu = androidx.appcompat.widget.PopupMenu(this, binding.addToPlanBtn)

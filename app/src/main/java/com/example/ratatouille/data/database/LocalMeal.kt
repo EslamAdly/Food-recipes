@@ -15,4 +15,6 @@ data class LocalMeal(
     val strInstructions: String,
     val strMeasureList:List<String>,
     var isFavorite: Boolean,
-)
+){
+    constructor (): this("","","","","","","",emptyList(),false)
+}

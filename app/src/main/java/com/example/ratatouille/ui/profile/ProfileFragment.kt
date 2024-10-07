@@ -54,18 +54,19 @@ class ProfileFragment : Fragment() {
 
     private fun userLogout() {
         lifecycleScope.launch(Dispatchers.IO) {
+            clearAllTables()
             FirebaseAuth.getInstance().signOut()
             withContext(Dispatchers.Main) {
                 startActivity(Intent(requireContext(), LoginActivity::class.java))
             }
         }
     }
-//    private suspend fun clearAllTables(context: Context) {
-//
-//            favoriteDatabase.getMealDao().clearMeals()
-//            favoriteDatabase.getIngredientDao().clearIngredients()
-//            favoriteDatabase.getMealsPlanDao().clearMealPlans()
-//            favoriteDatabase.getCrossRefDao().clearCrossRefs()
-//
-//    }
+    private suspend fun clearAllTables() {
+
+            favoriteDatabase.getMealDao().clearMeals()
+            favoriteDatabase.getIngredientDao().clearIngredients()
+            favoriteDatabase.getMealsPlanDao().clearMealPlans()
+            favoriteDatabase.getCrossRefDao().clearCrossRefs()
+
+    }
 }
