@@ -2,6 +2,7 @@ package com.example.ratatouille
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
@@ -16,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-        setContentView(R.layout.activity_main)
+        //setContentView(R.layout.activity_main)
 
         firebaseAuth = FirebaseAuth.getInstance()
         val currentUser = firebaseAuth.currentUser
@@ -26,11 +27,11 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
             else{
+                Log.d("currentUser", currentUser.toString())
                 startActivity(Intent(this, ContainerActivity::class.java))
             }
 
 
     }
-
 
 }

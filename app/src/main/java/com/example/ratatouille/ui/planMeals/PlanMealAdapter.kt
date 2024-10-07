@@ -34,7 +34,7 @@ class PlanMealAdapter(var meals: List<MealsPlan>) :
         holder.mealImg.setOnClickListener {
             val intent = Intent(holder.itemView.context, MealActivity::class.java).apply {
                 putExtra("mealId", meals[position].mealId)
-                putExtra("source", "retrofit")
+                putExtra("source", "database")
             }
             holder.itemView.context.startActivity(intent)
         }

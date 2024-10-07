@@ -5,7 +5,9 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Ingredient(
-    @PrimaryKey(autoGenerate = false) val strIngredient: String,
-    val strIngredientThump: String,
-    var isSelected:Boolean,
-)
+    @PrimaryKey(autoGenerate = false) val strIngredient: String="",
+    val strIngredientThump: String="",
+    var isSelected:Boolean=false,
+){
+    constructor():this("","",false)
+}

@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.ratatouille.data.database.Ingredient
+
 @Dao
 interface IngredientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -24,7 +25,8 @@ interface IngredientDao {
     suspend fun getSelectedIngredients(): List<Ingredient>
 
     @Delete
-    suspend fun deleteIngredient(ingredient: Ingredient):Int
+    suspend fun deleteIngredient(ingredient: Ingredient): Int
+
     @Query("DELETE FROM Ingredient")
     suspend fun clearIngredients()
 }
