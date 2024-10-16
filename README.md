@@ -27,12 +27,11 @@
   - Firestore for syncing user data like favorite meals, meal plans, and selected ingredients.
 - **MVVM Architecture**: The app uses the MVVM pattern to maintain a clean separation of concerns between UI and data.
 ## Screenshots
-
-<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-  <img src="https://github.com/user-attachments/assets/e3ff51e1-2565-454e-aa35-f7bc19a2ccea" alt="home" width="45%" />
-  <img src="https://github.com/user-attachments/assets/6f59b97b-1a3e-48c4-af76-db99c1d478cf" alt="favorite screen" width="45%" />
-  <img src="https://github.com/user-attachments/assets/1c629098-6b7e-458f-923d-8624aed93ee9" alt="meal screen" width="45%" />
-  <img src="https://github.com/user-attachments/assets/7948cf91-a190-414a-bc46-8f48a1fe087d" alt="meal ingredient" width="45%" />
-  <img src="https://github.com/user-attachments/assets/b4d48e30-cde4-414b-b84c-ae414233d815" alt="plan meals" width="45%" />
-  <img src="https://github.com/user-attachments/assets/11740607-873c-4eec-a89b-9c13abad926b" alt="ingredient list" width="45%" />
+<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+  <img src="https://github.com/user-attachments/assets/191b4945-468c-4b95-a546-9ec16fa0f921" alt="home" width="45%" />
+  <img src="https://github.com/user-attachments/assets/160f3835-75de-4aa0-81a2-1fd808c9e9ad" alt="favorite screen" width="45%" />
+  <img src="https://github.com/user-attachments/assets/d542817a-2d3f-4d58-93d8-5970a2b261b8" alt="meal screen" width="45%" />
+  <img src="https://github.com/user-attachments/assets/291221b9-9d32-4b01-9eaa-dbbd6ff0fc72" alt="meal ingredient" width="45%" />
+  <img src="https://github.com/user-attachments/assets/57f0d912-5ba5-4566-aeca-3dfc840f2632" alt="plan meals" width="45%" />
+  <img src="https://github.com/user-attachments/assets/aef2f5de-d65b-4c7c-855b-df3e09a90c5d" alt="ingredient list" width="45%" />
 </div>
